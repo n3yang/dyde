@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+    nginx:
+        image: nginx:latest
+        volumes:
+            - "./conf/nginx:/etc/nginx/conf.d"
+            - "./log/nginx:/var/log/nginx"
+            - "./app:/var/www/html"
+            - "/etc/localtime:/etc/localtime:ro"
+        ports:
+            - 10080:80
+        restart: always
+        depends_on:
+            - php
+    mariadb:
+        image: mariadb:latest
+        restart: always
+        ports:
+            - 13306:3306
+        volumes:
+            - "./conf/mysql/:/etc/mysql/conf.d/"
+            - "./data/mysql:/var/lib/mysql"
+            - "./log/mysql:/var/log/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: dyde
+            MYSQL_DATABASE: dyde
+            MYSQL_USER: dyde
+            MYSQL_PASSWORD: dyde
+    redis:
+        image: redis:latest
+        restart: always
+        volumes:
+            - "./data/redis/:/data"
+    php:
+        build:
+            context: ./conf/php
+            dockerfile: Dockerfile-php
+        restart: always
+        volumes:
+            - "./conf/php/php.ini:/usr/local/etc/php/php.ini"
+            - "./app:/var/www/html"
+        environment:
+            PHP_VERSION_TAG: 7.1-fpm
+        depends_on:
+            - mariadb
+            - redis

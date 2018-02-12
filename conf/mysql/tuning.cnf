@@ -1,0 +1,21 @@
+
+# Additional settings that can override those from this file!
+# The files must end with '.cnf', otherwise they'll be ignored.
+# Main setting: /etc/mysql/my.cnf
+
+[client]
+# Default is Latin1, if you need UTF-8 set this (also in server section)
+default-character-set = utf8 
+
+[mysqld]
+#
+# * Character sets
+# 
+# Default is Latin1, if you need UTF-8 set all this (also in client section)
+#
+character-set-server  = utf8 
+collation-server      = utf8_general_ci 
+
+slow_query_log        = 1
+slow_query_log_file   = /var/log/mysql/mariadb-slow.log
+long_query_time       = 2

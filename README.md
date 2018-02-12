@@ -1,13 +1,14 @@
 # DYDE (Docker Yii2 Development Environment)
 Easy way for creating yii2 framework development environment with docker compose.
 
-Images to used:  
+About Yii2 framework
 * [Yii2 framework](https://www.github.com/yiisoft/yii2)
-* [Nginx](https://hub.docker.com/_/nginx/)
-* [PHP](https://hub.docker.com/_/php-fpm/)
-* [Mysql](https://hub.docker.com/_/mysql/)
-* [Redis](https://hub.docker.com/_/redis)
 
+Images to used:  
+* [Nginx](https://hub.docker.com/_/nginx/)
+* [PHP](https://hub.docker.com/_/php/)
+* [MariaDB(Mysql)](https://hub.docker.com/_/mariadb/)
+* [Redis](https://hub.docker.com/_/redis/)
 
 Requirement
 -----------
@@ -17,18 +18,23 @@ Requirement
 Usage
 ------------
 1. Clone from github
-```
-git clone 
+```bash
+git clone git@github.com:n3yang/dyde.git
 ```
 2. Edit enviroment (Optinal)
-Edit .evn file, change some values you want.
-```
 
-```
+Edit dyde.evn file, change some variables you want.
+
 3. Run
-```
+```bash
 docker-compose up -d
 ```
+Visit http://localhost:8000/
+
+Tree of directiory
+------------------
+
+
 
 Customization
 -------------
