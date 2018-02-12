@@ -1,0 +1,15 @@
+
+
+# Translations
+.DS_Store
+
+# App
+app/*
+
+# Data
+data/mysql/*
+data/redis/*
+
+# Log
+log/mysql/*
+log/nginx/*
