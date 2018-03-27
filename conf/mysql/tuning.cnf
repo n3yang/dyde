@@ -1,7 +1,7 @@
 
 # Additional settings that can override those from this file!
 # The files must end with '.cnf', otherwise they'll be ignored.
-# Main setting: /etc/mysql/my.cnf
+# Main setting in container: /etc/mysql/my.cnf
 
 [client]
 # Default is Latin1, if you need UTF-8 set this (also in server section)
