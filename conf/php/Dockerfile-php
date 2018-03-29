@@ -7,10 +7,6 @@ FROM php:${PHP_VERSION_TAG}
 ENV MYSQL_DATABASE=${MYSQL_DATABASE} \
     MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
-RUN sed -i '1ideb http://mirrors.ustc.edu.cn/debian jessie main' /etc/apt/sources.list \
-    && sed -i '1ideb http://mirrors.ustc.edu.cn/debian jessie-updates main' /etc/apt/sources.list \
-    && sed -i 's/jessie\/updates/jessie-updates/g' /etc/apt/sources.list
-
 RUN apt-get update && apt-get upgrade -y \
     git \
     libfreetype6-dev \
@@ -59,5 +55,5 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 RUN cd /var/www/ \
     && composer create-project --prefer-dist yiisoft/yii2-app-basic html
 
-RUN sed -i "s/mysql:host=localhost;dbname=yii2basic/mysql:host=mariadb;dbname=${MYSQL_DATABASE}/" /var/www/html/config/db.php \
-    && sed -i "s/'password' => ''/'password' => '${MYSQL_ROOT_PASSWORD}'/" /var/www/html/config/db.php
+RUN sed -i "s/mysql:host=localhost;dbname=yii2basic/mysql:host=mariadb;dbname=$MYSQL_DATABASE/" /var/www/html/config/db.php \
+    && sed -i "s/'password' => ''/'password' => '$MYSQL_ROOT_PASSWORD'/" /var/www/html/config/db.php
