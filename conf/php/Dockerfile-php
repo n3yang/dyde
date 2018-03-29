@@ -57,3 +57,5 @@ RUN cd /var/www/ \
 
 RUN sed -i "s/mysql:host=localhost;dbname=yii2basic/mysql:host=mariadb;dbname=$MYSQL_DATABASE/" /var/www/html/config/db.php \
     && sed -i "s/'password' => ''/'password' => '$MYSQL_ROOT_PASSWORD'/" /var/www/html/config/db.php
+
+VOLUME ["/var/www/html"]
