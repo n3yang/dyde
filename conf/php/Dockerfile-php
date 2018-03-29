@@ -7,6 +7,10 @@ FROM php:${PHP_VERSION_TAG}
 ENV MYSQL_DATABASE=${MYSQL_DATABASE} \
     MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
+RUN sed -i '1ideb http://mirrors.ustc.edu.cn/debian jessie main' /etc/apt/sources.list \
+    && sed -i '1ideb http://mirrors.ustc.edu.cn/debian jessie-updates main' /etc/apt/sources.list \
+    && sed -i 's/jessie\/updates/jessie-updates/g' /etc/apt/sources.list
+
 RUN apt-get update && apt-get upgrade -y \
     git \
     libfreetype6-dev \
