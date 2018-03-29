@@ -1,5 +1,11 @@
 ARG PHP_VERSION_TAG
+ARG MYSQL_DATABASE
+ARG MYSQL_ROOT_PASSWORD
+
 FROM php:${PHP_VERSION_TAG}
+
+ENV MYSQL_DATABASE=${MYSQL_DATABASE} \
+    MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
 RUN apt-get update && apt-get upgrade -y \
     git \
@@ -47,8 +53,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && chmod a+x /usr/bin/composer
 
 RUN cd /var/www/ \
-    && composer create-project yiisoft/yii2-app-basic html
+    && composer create-project --prefer-dist yiisoft/yii2-app-basic html
 
-RUN sed -i "s/mysql:host=localhost;dbname=${MYSQL_DATABASE}/mysql:host=mariadb;dbname=${MYSQL_DATABASE}/" html/config/db.php \
-    && sed -i "s/'username' => 'root'/'username' => '${MYSQL_USER}'/" html/config/db.php \
-    && sed -i "s/'password' => ''/'password' => '${MYSQL_PASSWORD}'/" html/config/db.php
+RUN sed -i "s/mysql:host=localhost;dbname=yii2basic/mysql:host=mariadb;dbname=${MYSQL_DATABASE}/" /var/www/html/config/db.php \
+    && sed -i "s/'password' => ''/'password' => '${MYSQL_ROOT_PASSWORD}'/" /var/www/html/config/db.php

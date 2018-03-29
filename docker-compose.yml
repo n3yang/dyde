@@ -10,8 +10,8 @@ services:
         ports:
             - ${DYDE_NGINX_EXPOSE_PORT}:80
         restart: always
-        # depends_on:
-        #     - php
+        depends_on:
+            - php
     mariadb:
         image: mariadb:${MYSQL_VERSION_TAG}
         restart: always
@@ -32,6 +32,8 @@ services:
             dockerfile: Dockerfile-php
             args:
                 - PHP_VERSION_TAG=${PHP_VERSION_TAG}
+                - MYSQL_DATABASE=${MYSQL_DATABASE}
+                - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
         restart: always
         volumes:
             - "./conf/php/php.ini:/usr/local/etc/php/php.ini"
