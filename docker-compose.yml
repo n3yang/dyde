@@ -44,4 +44,5 @@ services:
             - "./app:/var/www/html"
         depends_on:
             - mariadb
-            - redis
+            - redisvolumes:
+    app-data:
