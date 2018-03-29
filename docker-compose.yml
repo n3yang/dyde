@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
     nginx:
@@ -21,6 +21,8 @@ services:
             - "./conf/mysql:/etc/mysql/conf.d"
             - "./data/mysql:/var/lib/mysql"
             - "./log/mysql:/var/log/mysql"
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     redis:
         image: redis:${REDIS_VERSION_TAG}
         restart: always
