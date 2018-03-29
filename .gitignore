@@ -13,3 +13,5 @@ data/redis/*
 # Log
 log/mysql/*
 log/nginx/*
+
+.env
