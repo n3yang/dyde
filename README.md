@@ -21,15 +21,16 @@ Usage
 ```bash
 git clone git@github.com:n3yang/dyde.git
 ```
-2. Edit enviroment (Optinal)
+2. Prepare enviroment
 
-Edit dyde.evn file, change some variables you want.
+* Copy dyde.env to .env
+* Edit .evn file, change some variables you want. (Optional)
 
 3. Run
 ```bash
 docker-compose up -d
 ```
-Visit http://localhost:8000/
+Visit http://localhost:8000/ (default nginx http port)
 
 Tree of directiory
 ------------------

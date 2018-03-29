@@ -2,33 +2,27 @@ version: '2'
 
 services:
     nginx:
-        image: nginx:latest
+        image: nginx:${NGINX_VERSION_TAG}
         volumes:
             - "./conf/nginx:/etc/nginx/conf.d"
             - "./log/nginx:/var/log/nginx"
             - "./app:/var/www/html"
-            - "/etc/localtime:/etc/localtime:ro"
         ports:
-            - 10080:80
+            - ${DYDE_NGINX_EXPOSE_PORT}:80
         restart: always
-        depends_on:
-            - php
+        # depends_on:
+        #     - php
     mariadb:
-        image: mariadb:latest
+        image: mariadb:${MYSQL_VERSION_TAG}
         restart: always
         ports:
-            - 13306:3306
+            - ${DYDE_MYSQL_EXPOSE_PORT}:3306
         volumes:
-            - "./conf/mysql/:/etc/mysql/conf.d/"
+            - "./conf/mysql:/etc/mysql/conf.d"
             - "./data/mysql:/var/lib/mysql"
             - "./log/mysql:/var/log/mysql"
-        environment:
-            MYSQL_ROOT_PASSWORD: dyde
-            MYSQL_DATABASE: dyde
-            MYSQL_USER: dyde
-            MYSQL_PASSWORD: dyde
     redis:
-        image: redis:latest
+        image: redis:${REDIS_VERSION_TAG}
         restart: always
         volumes:
             - "./data/redis/:/data"
@@ -36,12 +30,12 @@ services:
         build:
             context: ./conf/php
             dockerfile: Dockerfile-php
+            args:
+                - PHP_VERSION_TAG=${PHP_VERSION_TAG}
         restart: always
         volumes:
             - "./conf/php/php.ini:/usr/local/etc/php/php.ini"
             - "./app:/var/www/html"
-        environment:
-            PHP_VERSION_TAG: 7.1-fpm
         depends_on:
             - mariadb
             - redis

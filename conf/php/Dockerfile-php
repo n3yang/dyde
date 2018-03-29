@@ -1,3 +1,4 @@
+ARG PHP_VERSION_TAG
 FROM php:${PHP_VERSION_TAG}
 
 RUN apt-get update && apt-get upgrade -y \
@@ -7,14 +8,13 @@ RUN apt-get update && apt-get upgrade -y \
     libpq-dev \
     libmagickwand-dev \
     libmcrypt-dev \
-    libmcrypt-dev \
     libpng-dev \
     libmemcached-dev \
     libssl-dev \
     libssl-doc \
-    libsasl2-dev \
     zlib1g-dev \
     libicu-dev \
+    libxml2-dev \
     g++ \
     && docker-php-ext-install \
         bz2 \
@@ -42,7 +42,13 @@ RUN apt-get update && apt-get upgrade -y \
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');"
+    && php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/bin/composer \
+    && chmod a+x /usr/bin/composer
 
 RUN cd /var/www/ \
-    && php composer.phar create-project yiisoft/yii2-app-basic html
+    && composer create-project yiisoft/yii2-app-basic html
+
+RUN sed -i "s/mysql:host=localhost;dbname=${MYSQL_DATABASE}/mysql:host=mariadb;dbname=${MYSQL_DATABASE}/" html/config/db.php \
+    && sed -i "s/'username' => 'root'/'username' => '${MYSQL_USER}'/" html/config/db.php \
+    && sed -i "s/'password' => ''/'password' => '${MYSQL_PASSWORD}'/" html/config/db.php
