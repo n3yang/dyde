@@ -7,7 +7,7 @@ About Yii2 framework
 Images to used:  
 * [Nginx](https://hub.docker.com/_/nginx/)
 * [PHP](https://hub.docker.com/_/php/)
-* [MariaDB(Mysql)](https://hub.docker.com/_/mariadb/)
+* [MariaDB(MySQL)](https://hub.docker.com/_/mariadb/)
 * [Redis](https://hub.docker.com/_/redis/)
 
 Requirement
@@ -31,16 +31,28 @@ Rebuid PHP image, install extensions and composer
 ```bash
 docker-compose up -d
 ```
-Create yii2 project
+4. Create yii2 project
 ```bash
 docker exec -it dyde_php_1 composer create-project --prefer-dist yiisoft/yii2-app-basic .
 ```
 The "dyde_php_1" is PHP container's name in your project.
 
+5. Update MySQL password in yii2 config file. (Optional)
+Enter PHP container
+```bash
+docker exec -it dyde_php_1 /bin/bash
+```
+Run
+```bash
+sed -i "s/mysql:host=localhost;dbname=yii2basic/mysql:host=mariadb;dbname=$MYSQL_DATABASE/" /var/www/html/config/db.php \
+    && sed -i "s/'password' => ''/'password' => '$MYSQL_ROOT_PASSWORD'/" /var/www/html/config/db.php
+```
+
 Visit http://localhost:8000/ (default nginx http port)
 
 Tree of directiory
 ------------------
+```
 .
 ├── app
 ├── conf
@@ -60,10 +72,63 @@ Tree of directiory
 │   ├── mysql
 │   └── nginx
 └── README.md
+```
 
 Installed PHP extensions
 ------------------------
+```
+[PHP Modules]
+bz2
+Core
+ctype
+curl
+date
+dom
+exif
+fileinfo
+filter
+ftp
+gd
+hash
+iconv
+imagick
+intl
+json
+libxml
+mbstring
+mcrypt
+mongodb
+mysqli
+mysqlnd
+openssl
+pcre
+PDO
+pdo_mysql
+pdo_pgsql
+pdo_sqlite
+pgsql
+Phar
+posix
+readline
+redis
+Reflection
+session
+SimpleXML
+soap
+SPL
+sqlite3
+standard
+tokenizer
+xml
+xmlreader
+xmlwriter
+Zend OPcache
+zip
+zlib
 
+[Zend Modules]
+Zend OPcache
+```
 
 Customization
 -------------
