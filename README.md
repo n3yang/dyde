@@ -33,7 +33,7 @@ docker-compose up -d
 ```
 Create yii2 project
 ```bash
-docker run -it --rm dyde_php_1 composer create-project --prefer-dist yiisoft/yii2-app-basic app
+docker exec -it dyde_php_1 composer create-project --prefer-dist yiisoft/yii2-app-basic .
 ```
 The "dyde_php_1" is PHP container's name in your project.
 
@@ -41,7 +41,25 @@ Visit http://localhost:8000/ (default nginx http port)
 
 Tree of directiory
 ------------------
-
+.
+├── app
+├── conf
+│   ├── mysql
+│   │   └── tuning.cnf
+│   ├── nginx
+│   │   └── default.conf
+│   └── php
+│       ├── Dockerfile-php
+│       └── php.ini
+├── data
+│   ├── mysql
+│   └── redis
+├── docker-compose.yml
+├── dyde.env
+├── log
+│   ├── mysql
+│   └── nginx
+└── README.md
 
 Installed PHP extensions
 ------------------------
