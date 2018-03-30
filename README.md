@@ -17,31 +17,38 @@ Requirement
 
 Usage
 ------------
+
 1. Clone from github
 ```bash
 git clone git@github.com:n3yang/dyde.git
 ```
+
 2. Prepare enviroment
 
 * Copy dyde.env to .env
 * Edit .evn file, change some variables you want. (Optional)
 
 3. Run
+
 Rebuid PHP image, install extensions and composer
 ```bash
 docker-compose up -d
 ```
+
 4. Create yii2 project
+
 ```bash
 docker exec -it dyde_php_1 composer create-project --prefer-dist yiisoft/yii2-app-basic .
 ```
 The "dyde_php_1" is PHP container's name in your project.
 
 5. Update MySQL password in yii2 config file. (Optional)
+
 Enter PHP container
 ```bash
 docker exec -it dyde_php_1 /bin/bash
 ```
+
 Run
 ```bash
 sed -i "s/mysql:host=localhost;dbname=yii2basic/mysql:host=mariadb;dbname=$MYSQL_DATABASE/" /var/www/html/config/db.php \
@@ -52,6 +59,7 @@ Visit http://localhost:8000/ (default nginx http port)
 
 Tree of directiory
 ------------------
+
 ```
 .
 ├── app
@@ -76,6 +84,7 @@ Tree of directiory
 
 Installed PHP extensions
 ------------------------
+
 ```
 [PHP Modules]
 bz2
